@@ -79,7 +79,6 @@ export function TripForm({ initialData, id }: TripFormProps) {
 					await storage.saveItem({
 						...existingTrip,
 						data: data,
-						id: id,
 					});
 				}
 			} else {

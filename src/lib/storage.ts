@@ -7,11 +7,22 @@ localforage.config({
   storeName: 'app_data'
 })
 
-export interface StorageItem {
-  id: string
-  timestamp: number
-  type: 'form' | 'image' | 'location'
-  data: any
+export type TripData = {
+  title: string;
+  date: string;
+  description: string;
+  location?: {
+    latitude?: number;
+    longitude?: number;
+    address?: string;
+  };
+};
+
+export interface StorageItem<T = TripData> {
+  id: string;
+  timestamp: number;
+  type: 'form' | 'image' | 'location';
+  data: T;
 }
 
 class StorageService {

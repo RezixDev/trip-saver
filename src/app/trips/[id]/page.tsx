@@ -6,14 +6,14 @@ import { TripForm } from "@/components/forms/TripForm";
 import { useParams, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
-import { storage } from "@/lib/storage";
+import { storage, type TripData, type StorageItem } from "@/lib/storage";
 import { useToast } from "@/hooks/use-toast";
 
 export default function Page() {
 	const params = useParams();
 	const router = useRouter();
 	const { toast } = useToast();
-	const [trip, setTrip] = useState<any>(null);
+	const [trip, setTrip] = useState<StorageItem<TripData> | null>(null);
 	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
@@ -33,7 +33,7 @@ export default function Page() {
 			} catch (error) {
 				toast({
 					title: "Error",
-					description: "Failed to load trip",
+					description: "Failed to load trip" + error,
 					variant: "destructive",
 				});
 			} finally {

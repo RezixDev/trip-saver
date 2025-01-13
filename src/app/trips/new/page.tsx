@@ -8,6 +8,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
+import Image from "next/image";
 
 export default function Page() {
 	const router = useRouter();
@@ -41,12 +42,14 @@ export default function Page() {
 					{images.length > 0 && (
 						<div className="grid grid-cols-2 gap-2 mt-4">
 							{images.map((image, index) => (
-								<img
-									key={index}
-									src={image}
-									alt={`Captured ${index + 1}`}
-									className="w-full h-32 object-cover rounded-lg"
-								/>
+								<div key={index} className="relative aspect-square w-full">
+									<Image
+										src={image}
+										alt={`Captured ${index + 1}`}
+										fill
+										className="object-cover rounded-lg"
+									/>
+								</div>
 							))}
 						</div>
 					)}

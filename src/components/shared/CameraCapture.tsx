@@ -31,7 +31,8 @@ export const CameraCapture = ({ onCapture }: CameraCaptureProps) => {
 		} catch (error) {
 			toast({
 				title: "Camera Error",
-				description: "Unable to access camera. Please check permissions.",
+				description:
+					"Unable to access camera. Please check permissions." + error,
 				variant: "destructive",
 			});
 		}

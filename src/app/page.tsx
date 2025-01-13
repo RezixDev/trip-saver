@@ -1,7 +1,7 @@
 // app/trips/page.tsx
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import {
 	Card,
@@ -25,7 +25,6 @@ import {
 	AlertDialogTitle,
 	AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { useRouter } from "next/navigation";
 
 type Trip = {
 	title: string;
@@ -42,13 +41,13 @@ export default function Page() {
 	const [trips, setTrips] = useState<StorageItem[]>([]);
 	const [loading, setLoading] = useState(true);
 	const { toast } = useToast();
-	const router = useRouter();
 
-	async function loadTrips() {
+	const loadTrips = useCallback(async () => {
 		try {
 			const items = await storage.getItems("form");
 			setTrips(items);
-		} catch (error) {
+		} catch (err) {
+			console.error("Failed to load trips:", err);
 			toast({
 				title: "Error",
 				description: "Failed to load trips",
@@ -57,11 +56,11 @@ export default function Page() {
 		} finally {
 			setLoading(false);
 		}
-	}
+	}, [toast]);
 
 	useEffect(() => {
 		loadTrips();
-	}, []);
+	}, [loadTrips]);
 
 	const handleDelete = async (id: string) => {
 		try {
@@ -74,7 +73,7 @@ export default function Page() {
 		} catch (error) {
 			toast({
 				title: "Error",
-				description: "Failed to delete trip",
+				description: "Failed to delete trip" + error,
 				variant: "destructive",
 			});
 		}

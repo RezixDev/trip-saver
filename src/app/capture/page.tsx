@@ -5,12 +5,26 @@ import { CameraCapture } from "@/components/shared/CameraCapture";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 
 export default function Page() {
 	const router = useRouter();
+	const { toast } = useToast();
 
-	const handleCapture = (image: string) => {
-		// Handle captured image
+	const handleCapture = async () => {
+		try {
+			// Handle the captured image
+			toast({
+				title: "Success",
+				description: "Image captured successfully",
+			});
+		} catch (err) {
+			toast({
+				title: "Error",
+				description: "Failed to save image" + err,
+				variant: "destructive",
+			});
+		}
 	};
 
 	return (
